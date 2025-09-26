@@ -95,6 +95,7 @@
         alert('Connection closed');
       });
 
+      const turn = url.searchParams.get('turn');
       const peerConnection = new RTCPeerConnection({
         iceServers: [
           {
@@ -102,8 +103,8 @@
           },
           {
             urls: [
-              `turn:${url.host}:3478?transport=udp`,
-              `turns:${url.host}:5349?transport=tcp`
+              `turn:${turn}:3478?transport=udp`,
+              `turns:${turn}:5349?transport=tcp`
             ],
             username: url.username,
             credential: url.password,
