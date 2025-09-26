@@ -97,10 +97,16 @@
 
       const peerConnection = new RTCPeerConnection({
         iceServers: [
+          // {
+          //   urls: 'stun:stun.l.google.com:19302',
+          // },
           {
-            urls: 'stun:stun.l.google.com:19302',
-          },
+            urls: url.searchParams.get('turn'),
+            username: url.username,
+            credential: url.password,
+          }
         ],
+        iceTransportPolicy: 'relay',
       });
 
       peerConnection.addEventListener('icecandidate', function icecandidate(event) {
@@ -117,7 +123,8 @@
       });
 
       peerConnection.addEventListener('connectionstatechange', function connectionstatechange() {
-        if (peerConnection.connectionState === 'failed' || peerConnection.connectionState === 'disconnected') {
+        if (peerConnection.connectionState === 'failed'
+          || peerConnection.connectionState === 'disconnected') {
           endCall();
         }
       });
